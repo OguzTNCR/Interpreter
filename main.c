@@ -5,7 +5,7 @@
 
 typedef struct  {
     int type;
-    char *value;
+    char value[];
 }Token;
 
 Token* tokenize(char* line) {
@@ -23,15 +23,15 @@ Token* tokenize(char* line) {
     }
     else if (isdigit(*line)) {
         type = 1;
+        *start = *line;
         while (isdigit(*line)) {
-            *start = *line;
             line++;
         }
     }
 
     Token* token = malloc(sizeof(Token));
     token -> type = type;
-    token -> value = strndup(start, line - start);
+    strncpy(token -> value, start, line - start);
     return token;
 
 
