@@ -106,8 +106,8 @@
 	"kind" : "cmakeFiles",
 	"paths" : 
 	{
-		"build" : "/Users/tuncer/CLionProjects/untitled/cmake-build-debug",
-		"source" : "/Users/tuncer/CLionProjects/untitled"
+		"build" : "/Users/tuncer/CLionProjects/cmpe230/cmake-build-debug",
+		"source" : "/Users/tuncer/CLionProjects/cmpe230"
 	},
 	"version" : 
 	{

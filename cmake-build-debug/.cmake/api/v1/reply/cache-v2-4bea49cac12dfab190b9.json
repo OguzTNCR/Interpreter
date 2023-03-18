@@ -55,7 +55,7 @@
 				}
 			],
 			"type" : "INTERNAL",
-			"value" : "/Users/tuncer/CLionProjects/untitled/cmake-build-debug"
+			"value" : "/Users/tuncer/CLionProjects/cmpe230/cmake-build-debug"
 		},
 		{
 			"name" : "CMAKE_CACHE_MAJOR_VERSION",
@@ -383,7 +383,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "/Users/tuncer/CLionProjects/untitled/cmake-build-debug/CMakeFiles/pkgRedirects"
+			"value" : "/Users/tuncer/CLionProjects/cmpe230/cmake-build-debug/CMakeFiles/pkgRedirects"
 		},
 		{
 			"name" : "CMAKE_GENERATOR",
@@ -443,7 +443,7 @@
 				}
 			],
 			"type" : "INTERNAL",
-			"value" : "/Users/tuncer/CLionProjects/untitled"
+			"value" : "/Users/tuncer/CLionProjects/cmpe230"
 		},
 		{
 			"name" : "CMAKE_INSTALL_NAME_TOOL",
@@ -723,7 +723,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "untitled"
+			"value" : "cmpe230"
 		},
 		{
 			"name" : "CMAKE_RANLIB",
@@ -1006,7 +1006,7 @@
 			"value" : "FALSE"
 		},
 		{
-			"name" : "untitled_BINARY_DIR",
+			"name" : "cmpe230_BINARY_DIR",
 			"properties" : 
 			[
 				{
@@ -1015,10 +1015,10 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "/Users/tuncer/CLionProjects/untitled/cmake-build-debug"
+			"value" : "/Users/tuncer/CLionProjects/cmpe230/cmake-build-debug"
 		},
 		{
-			"name" : "untitled_IS_TOP_LEVEL",
+			"name" : "cmpe230_IS_TOP_LEVEL",
 			"properties" : 
 			[
 				{
@@ -1030,7 +1030,7 @@
 			"value" : "ON"
 		},
 		{
-			"name" : "untitled_SOURCE_DIR",
+			"name" : "cmpe230_SOURCE_DIR",
 			"properties" : 
 			[
 				{
@@ -1039,7 +1039,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "/Users/tuncer/CLionProjects/untitled"
+			"value" : "/Users/tuncer/CLionProjects/cmpe230"
 		}
 	],
 	"kind" : "cache",
