@@ -5,16 +5,16 @@
 
 typedef struct  {
     int type;
-    char value[];
+    char* value;
 }Token;
 
 Token* tokenize(char* line) {
-    int type;
+    int type = 0;
     char* start = line;
     while (*line == ' ') {   // skipping whitespaces
         line ++;
         if (*line == '\0') {   // end of line
-            break;
+            return NULL;
         }
     }
     if (*line == '+') {
@@ -29,6 +29,7 @@ Token* tokenize(char* line) {
         }
     }
 
+
     Token* token = malloc(sizeof(Token));
     token -> type = type;
     strncpy(token -> value, start, line - start);
@@ -39,16 +40,58 @@ Token* tokenize(char* line) {
 }
 
 
+Token* next_token(char* input) {
+    // Skip whitespace
+    while (isspace(*input)) {
+        input++;
+    }
+
+    // Identify token type
+    int type = 0;
+    char* start = input;
+    if (isdigit(*input)) {
+        type = 1;
+        while (isdigit(*input)) {
+            input++;
+        }
+    }
+    else if (*input == '+') {
+        type = 2;
+        input++;
+    }
+
+
+
+    // Create token
+    Token* token = malloc(sizeof(Token));
+    token->type = type;
+    token->value = strndup(start, input - start);
+    return token;
+}
+
+
+
+
 int main() {
 
 
     while (1) {
-        char line[256];
+        char *line;
 
         printf(">");
         fgets(line, 256, stdin);
-        Token *token = tokenize(line);
-        printf("type = %d : value %s\n", token -> type, token -> value);
+        Token *token;
+        while (next_token(line) != NULL) {
+            token = next_token(line);
+            printf("type=%d, value=%s\n", token->type, token->value);
+            line += strlen(token->value);
+            free(token->value);
+            free(token);
+        }
+
+//        Token* token = next_token(line);
+//        printf("type: %d, value: %s", token -> type, token -> value);
+
 
     }
 }
