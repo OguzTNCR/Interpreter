@@ -1,5 +1,5 @@
 //
-// Created by Oğuzhan TUNCER on 18.03.2023.
+// Created by Oguzhan TUNCER on 18.03.2023.
 //
 
 #ifndef CMPE230_TOKEN_H
