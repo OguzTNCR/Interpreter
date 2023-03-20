@@ -245,6 +245,52 @@ Token* tokenize(char* line) {
     return tokens;
 }
 
+typedef struct {
+    Token* token;
+}NumNode;
+
+typedef struct {
+    NumNode* left_node;
+    NumNode* right_node;
+    Token* token;
+}OpNode;
+
+// Function Node struct needs to be implemented
+
+int TOKEN_INDEX = 0;
+
+NumNode* factor(Token* tokens) {
+    NumNode* node = malloc(sizeof(NumNode));
+    if (tokens[TOKEN_INDEX].type == TOKEN_NUMBER) {
+        node -> token = &tokens[TOKEN_INDEX];
+        TOKEN_INDEX++;
+        return node;
+    }
+}
+
+OpNode* term(Token* tokens) {
+    OpNode* node = malloc(sizeof(OpNode));
+    node -> left_node = factor(&tokens[TOKEN_INDEX]);
+    while (tokens[TOKEN_INDEX].type == TOKEN_MULTIPLY) {
+        node -> token = &tokens[TOKEN_INDEX];
+        node -> right_node = factor(&tokens[TOKEN_INDEX]);
+        TOKEN_INDEX++;
+    }
+    return node;
+}
+
+OpNode* expr(Token* tokens) {
+    OpNode* node = malloc(sizeof(OpNode));
+    node -> left_node = term(tokens);
+    while (tokens[TOKEN_INDEX].type == TOKEN_PLUS || tokens[TOKEN_INDEX].type == TOKEN_MINUS) {
+        node -> token = &tokens[TOKEN_INDEX];
+        node -> right_node = term(&tokens[TOKEN_INDEX]);
+        TOKEN_INDEX++;
+    }
+    return node;
+}
+
+
 
 
 
@@ -255,10 +301,13 @@ int main() {
         char line[256];
         printf(">");
         fgets(line, 256, stdin);
-        Token* tokens = tokenize(line);
-        for (int i = 0; tokens[i].type != 0; i++) {
-            printf("type: %d, value: %s\n", tokens[i].type, tokens[i].value);
-        }
+
+//        Token* tokens = tokenize(line);
+//        for (int i = 0; tokens[i].type != 0; i++) {
+//            printf("type: %d, value: %s\n", tokens[i].type, tokens[i].value);
+//        }
+        OpNode* node = expr(tokenize(line));
+        printf("%s", node -> left_node -> token -> value);
 
     }
 }
