@@ -8,7 +8,7 @@
 typedef enum {
     TOKEN_EOL,
     TOKEN_ERROR,
-    TOKEN_NUMBER,
+    TOKEN_NUMBER,   //
     TOKEN_IDENTIFIER,
     TOKEN_PLUS,
     TOKEN_MINUS,
@@ -23,6 +23,7 @@ typedef enum {
     TOKEN_NOT,
     TOKEN_OPEN_PAREN,
     TOKEN_CLOSE_PAREN,
+    TOKEN_COMMENT,
     TOKEN_COMMA
 } TokenType;
 
