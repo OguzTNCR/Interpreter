@@ -7,23 +7,47 @@
 
 #include "token.h"
 
+// Parser types
 typedef enum {
-    PARSER_INTEGER,
-    PARSER_IDENTIFIER,
-    PARSER_BINARY,
-    PARSER_UNARY,
-    PARSER_FUNC
+    PARSER_STATEMENT, // statement
+    PARSER_NUMBER, // number
+    PARSER_IDENTIFIER, // identifier
+    PARSER_FUNC, // function
+    PARSER_ASSIGN, // assignment
+    PARSER_EXPR, // expression
+    PARSER_TERM, // term
+    PARSER_FACTOR, // factor
 } ParserType;
 
+// Parser node
 typedef struct ParserNode{
-    ParserType type;
-    Token* token;
-    struct ParserNode* left;
-    struct ParserNode* right;
-    struct ParserNode* operation;
-    struct ParserNode* parameters;
+    ParserType type; // type of the node
+    Token* token; // token of the node
+    struct ParserNode* left; // left child
+    struct ParserNode* right; // right child
 } ParserNode;
 
-ParserNode *parser_primary()
+static const char* parser_type_names[] = {
+        "PARSER_STATEMENT",
+        "PARSER_NUMBER",
+        "PARSER_IDENTIFIER",
+        "PARSER_FUNC",
+        "PARSER_ASSIGN",
+        "PARSER_EXPR",
+        "PARSER_TERM",
+        "PARSER_FACTOR"
+};
+
+// Parser functions
+ParserNode* parser_statement(Token* tokens, int* token_index);
+ParserNode* parser_assign_expr(Token* tokens, int* token_index);
+ParserNode* parser_expr(Token* tokens, int* token_index);
+ParserNode* parser_term(Token* tokens, int* token_index);
+ParserNode* parser_factor(Token* tokens, int* token_index);
+ParserNode* parser_number(Token* tokens, int* token_index);
+ParserNode* parser_identifier(Token* tokens, int* token_index);
+ParserNode* parser_func(Token* tokens, int* token_index);
+ParserNode* parser_add_expr(Token* tokens, int* token_index);
+ParserNode* parser_mul_expr(Token* tokens, int* token_index);
 
 #endif //CMPE230_PARSER_H

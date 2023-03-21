@@ -1,0 +1,19 @@
+program -> statement
+statement -> assignment | expression
+assignment -> variable '=' expression
+expression -> term | expression '+' term | expression '-' term
+term -> factor | term '*' factor
+factor -> constant | variable | '(' expression ')' | xor | bitwise_not | bitwise_shift | bitwise_rotate
+variable -> letter {letter | digit}
+constant -> integer
+letter -> 'a' | 'b' | ... | 'z' | 'A' | 'B' | ... | 'Z'
+integer -> digit {digit}
+digit -> '0' | '1' | ... | '9'
+xor -> 'xor' '(' expression ',' expression ')'
+bitwise_not -> 'not' '(' expression ')'
+bitwise_shift -> bitwise_left_shift | bitwise_right_shift
+bitwise_left_shift -> 'ls' '(' expression ',' integer ')'
+bitwise_right_shift -> 'rs' '(' expression ',' integer ')'
+bitwise_rotate -> bitwise_left_rotate | bitwise_right_rotate
+bitwise_left_rotate -> 'lr' '(' expression ',' integer ')'
+bitwise_right_rotate -> 'rr' '(' expression ',' integer ')'
