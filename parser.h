@@ -39,12 +39,12 @@ static const char* parser_type_names[] = {
 };
 
 // Parser functions
-ParserNode* parser_statement(Token* tokens, int* token_index);
+ParserNode* parser_statement(Token* tokens);
 ParserNode* parser_assign_expr(Token* tokens, int* token_index);
-ParserNode* parser_expr(Token* tokens, int* token_index);
-ParserNode* parser_term(Token* tokens, int* token_index);
-ParserNode* parser_factor(Token* tokens, int* token_index);
-ParserNode* parser_number(Token* tokens, int* token_index);
+ParserNode* parser_expr(Token* tokens);
+ParserNode* parser_term(Token* tokens);
+ParserNode* parser_factor(Token* tokens);
+ParserNode* parser_number(Token* tokens);
 ParserNode* parser_identifier(Token* tokens, int* token_index);
 ParserNode* parser_func(Token* tokens, int* token_index);
 ParserNode* parser_add_expr(Token* tokens, int* token_index);

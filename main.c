@@ -188,7 +188,7 @@ typedef struct {
 
 // Function Node struct needs to be implemented
 
-int* TOKEN_INDEX = 0;
+
 
 //NumNode* factor(Token* tokens) {
 //    NumNode* node = malloc(sizeof(NumNode));
@@ -261,15 +261,15 @@ int* TOKEN_INDEX = 0;
 //    return node;
 //}
 
-//void tree_print(ParserNode* node) {
-//    if (node == NULL) {
-//        return;
-//    }
-//    printf("%s\n", node -> token -> value);
-//    tree_print(node -> left);
-//    tree_print(node -> right);
-//
-//}
+void tree_print(ParserNode* node) {
+    if (node == NULL) {
+        return;
+    }
+    printf("%s\n", node -> token -> value);
+    tree_print(node -> left);
+    tree_print(node -> right);
+
+}
 
 
 int main() {
@@ -284,8 +284,9 @@ int main() {
             printf("type: %d, value: %s\n", tokens[i].type, tokens[i].value);
         }
 
-        ParserNode* node = parser_expr(tokens, TOKEN_INDEX);
+        ParserNode* node = parser_expr(tokens);
 
+//        tree_print(node);
 
     }
 }
