@@ -49,5 +49,6 @@ ParserNode* parser_identifier(Token* tokens, int* token_index);
 ParserNode* parser_func(Token* tokens, int* token_index);
 ParserNode* parser_add_expr(Token* tokens, int* token_index);
 ParserNode* parser_mul_expr(Token* tokens, int* token_index);
+void print_node(ParserNode* node);
 
 #endif //CMPE230_PARSER_H

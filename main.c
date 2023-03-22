@@ -261,15 +261,15 @@ typedef struct {
 //    return node;
 //}
 
-void tree_print(ParserNode* node) {
-    if (node == NULL) {
-        return;
-    }
-    printf("%s\n", node -> token -> value);
-    tree_print(node -> left);
-    tree_print(node -> right);
+//void tree_print(ParserNode* node) {
+//    if (node == NULL) {
+//        return;
+//    }
+//    printf("%s\n", node -> token -> value);
+//    tree_print(node -> left);
+//    tree_print(node -> right);
 
-}
+//}
 
 
 int main() {
@@ -286,7 +286,7 @@ int main() {
 
         ParserNode* node = parser_expr(tokens);
 
-//        tree_print(node);
+        print_node(node);
 
     }
 }

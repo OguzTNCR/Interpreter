@@ -15,33 +15,36 @@ ParserNode* parser_statement(Token* tokens) {
 }
 
 ParserNode* parser_expr(Token* tokens) {
-    printf("token_index: %d, token_type: %d, token_value: %s\n", TOKEN_INDEX, tokens[TOKEN_INDEX].type, tokens[TOKEN_INDEX].value);
-    ParserNode* node = malloc(sizeof(ParserNode));
-    node -> type = PARSER_EXPR;
-    node -> left = parser_term(tokens);
-    node -> token = &tokens[TOKEN_INDEX];
+    ParserNode* left = parser_term(tokens);
     while (tokens[TOKEN_INDEX].type == TOKEN_PLUS || tokens[TOKEN_INDEX].type == TOKEN_MINUS) {
+        Token* op_token = &tokens[TOKEN_INDEX];
         TOKEN_INDEX++;
-        node -> right = parser_term(tokens);
+        ParserNode *right = parser_term(tokens);
+        left -> left = left;
+        left -> right = right;
+        left -> token = op_token;
+        left -> type = PARSER_EXPR;
     }
-    return node;
+    return left;
 }
 
 ParserNode* parser_term(Token* tokens) {
-    printf("token_index: %d, token_type: %d, token_value: %s\n", TOKEN_INDEX, tokens[TOKEN_INDEX].type, tokens[TOKEN_INDEX].value);
-    ParserNode* node = malloc(sizeof(ParserNode));
-    node -> type = PARSER_TERM;
-    node -> left = parser_factor(tokens);
-    node -> token = &tokens[TOKEN_INDEX];
+//    printf("token_index: %d, token_type: %d, token_value: %s\n", TOKEN_INDEX, tokens[TOKEN_INDEX].type, tokens[TOKEN_INDEX].value);
+    ParserNode* left = parser_number(tokens);
     while (tokens[TOKEN_INDEX].type == TOKEN_MULTIPLY) {
+        Token* op_token = &tokens[TOKEN_INDEX];
         TOKEN_INDEX++;
-        node -> right = parser_factor(tokens);
+        ParserNode *right = parser_number(tokens);
+        left -> left = left;
+        left -> right = right;
+        left -> token = op_token;
+        left -> type = PARSER_TERM;
     }
-    return node;
+    return left;
 }
 
 ParserNode* parser_factor(Token* tokens) {
-    printf("token_index: %d, token_type: %d, token_value: %s\n", TOKEN_INDEX, tokens[TOKEN_INDEX].type, tokens[TOKEN_INDEX].value);
+//    printf("token_index: %d, token_type: %d, token_value: %s\n", TOKEN_INDEX, tokens[TOKEN_INDEX].type, tokens[TOKEN_INDEX].value);
     ParserNode* node = malloc(sizeof(ParserNode));
     node -> type = PARSER_FACTOR;
     node -> token = &tokens[TOKEN_INDEX];
@@ -53,12 +56,21 @@ ParserNode* parser_factor(Token* tokens) {
 }
 
 ParserNode* parser_number(Token* tokens) {
-    printf("token_index: %d, token_type: %d, token_value: %s\n", TOKEN_INDEX, tokens[TOKEN_INDEX].type, tokens[TOKEN_INDEX].value);
-    ParserNode* node = malloc(sizeof(ParserNode));
-    node -> type = PARSER_NUMBER;
-    node -> token = &tokens[TOKEN_INDEX];
+    Token* token = &tokens[TOKEN_INDEX];
     TOKEN_INDEX++;
+    ParserNode *node = malloc(sizeof(ParserNode));
+    node -> type = PARSER_NUMBER;
+    node -> token = token;
     return node;
+}
+
+void print_node(ParserNode* node) {
+    if (node == NULL) {
+        return;
+    }
+    printf("node_type: %d, node_token: %s\n", node -> type, node -> token -> value);
+    print_node(node -> left);
+    print_node(node -> right);
 }
 
 
