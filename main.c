@@ -285,6 +285,7 @@ int main() {
         }
 
         ParserNode* node = parser_expr(tokens);
+        reset_token_index();
 
 //        tree_print(node);
 
