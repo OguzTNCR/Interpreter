@@ -284,7 +284,7 @@ int main() {
             printf("type: %d, value: %s\n", tokens[i].type, tokens[i].value);
         }
 
-        ParserNode* node = parser_expr(tokens);
+        ParserNode* node = parser_statement(tokens);
         reset_token_index();
 
 //        tree_print(node);
