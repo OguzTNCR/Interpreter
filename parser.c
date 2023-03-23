@@ -96,8 +96,6 @@ ParserNode* parser_factor(Token* tokens) {
                 }
                 TOKEN_INDEX++;
                 node -> right = parser_expr(tokens);
-            } else {
-                node -> right = NULL;
             }
             reset_is_function();
         }
