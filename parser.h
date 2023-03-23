@@ -51,5 +51,6 @@ ParserNode* parser_add_expr(Token* tokens);
 ParserNode* parser_mul_expr(Token* tokens);
 void reset_token_index();
 void reset_is_not_function();
+void reset_is_function();
 
 #endif //CMPE230_PARSER_H

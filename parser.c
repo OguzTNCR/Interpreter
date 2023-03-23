@@ -6,6 +6,7 @@
 
 int TOKEN_INDEX = 0;
 bool is_not_function = false;
+bool is_function = false;
 
 ParserNode* parser_statement(Token* tokens) {
     if (&tokens[TOKEN_INDEX] == TOKEN_EOL) {
@@ -86,17 +87,21 @@ ParserNode* parser_factor(Token* tokens) {
         TOKEN_INDEX++;
         node = parser_expr(tokens);
 
-        if (tokens[TOKEN_INDEX].type == TOKEN_COMMA) {
-            if (is_not_function) {
-                printf("Error!\n");
-                reset_is_not_function();
-                exit(1);
+        if (is_function) {
+            if (tokens[TOKEN_INDEX].type == TOKEN_COMMA) {
+                if (is_not_function) {
+                    printf("Error!\n");
+                    reset_is_not_function();
+                    exit(1);
+                }
+                TOKEN_INDEX++;
+                node -> right = parser_expr(tokens);
+            } else {
+                node -> right = NULL;
             }
-            TOKEN_INDEX++;
-            node -> right = parser_expr(tokens);
-        } else {
-            node -> right = NULL;
+            reset_is_function();
         }
+
         if (tokens[TOKEN_INDEX].type == TOKEN_CLOSE_PAREN) {
             TOKEN_INDEX++;
         } else {
@@ -110,11 +115,12 @@ ParserNode* parser_factor(Token* tokens) {
     tokens[TOKEN_INDEX].type == TOKEN_BITWISE_OR ||
     tokens[TOKEN_INDEX].type == TOKEN_LR ||
     tokens[TOKEN_INDEX].type == TOKEN_RR) {
+        is_function = true;
         if (tokens[TOKEN_INDEX].type == TOKEN_NOT){
             is_not_function = true;
         }
         TOKEN_INDEX++;
-        node = parser_factor(tokens);
+        node = parser_expr(tokens);
         node -> type = PARSER_FUNC;
         node -> token = &tokens[TOKEN_INDEX];
     }else {
@@ -146,6 +152,10 @@ void reset_token_index() {
 
 void reset_is_not_function() {
     is_not_function = false;
+}
+
+void reset_is_function() {
+    is_function = false;
 }
 
 
