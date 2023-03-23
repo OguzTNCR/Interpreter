@@ -5,6 +5,7 @@
 #include <ctype.h>
 #include "parser.h"
 #include "token.h"
+#include "interpreter.h"
 
 Token* tokenize(char* line) {
     Token* tokens = malloc(sizeof(Token));
@@ -48,6 +49,13 @@ Token* tokenize(char* line) {
         }
         else if (*line == '&') {
             token -> type = TOKEN_BITWISE_AND;
+            token -> value = malloc(2);
+            token -> value[0] = *line;
+            token -> value[1] = '\0';
+            line++;
+        }
+        else if (*line == '=') {
+            token -> type = TOKEN_ASSIGN;
             token -> value = malloc(2);
             token -> value[0] = *line;
             token -> value[1] = '\0';
@@ -285,6 +293,7 @@ int main() {
         }
 
         ParserNode* node = parser_statement(tokens);
+        printf("%d\n", interpret(node));
         reset_token_index();
 
 //        tree_print(node);
