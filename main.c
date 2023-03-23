@@ -293,6 +293,7 @@ int main() {
         }
 
         ParserNode* node = parser_statement(tokens);
+//        tree_print(node);
         printf("%d\n", interpret(node));
         reset_token_index();
 

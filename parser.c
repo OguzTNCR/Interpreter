@@ -23,7 +23,7 @@ ParserNode* parser_expr(Token* tokens) {
     if (tokens[TOKEN_INDEX].type == TOKEN_EOL) {
         return NULL;
     }
-//    printf("Expr: %s, %s\n" , token_type_names[tokens[TOKEN_INDEX].type], tokens[TOKEN_INDEX].value);
+    printf("Expr: %s, %s\n" , token_type_names[tokens[TOKEN_INDEX].type], tokens[TOKEN_INDEX].value);
     while (tokens[TOKEN_INDEX].type == TOKEN_PLUS || tokens[TOKEN_INDEX].type == TOKEN_MINUS) {
         ParserNode* new_node = malloc(sizeof(ParserNode));
         new_node -> type = PARSER_EXPR;
@@ -41,7 +41,7 @@ ParserNode* parser_term(Token* tokens) {
     if (tokens[TOKEN_INDEX].type == TOKEN_EOL) {
         return NULL;
     }
-//    printf("Term: %s, %s\n" , token_type_names[tokens[TOKEN_INDEX].type], tokens[TOKEN_INDEX].value);
+    printf("Term: %s, %s\n" , token_type_names[tokens[TOKEN_INDEX].type], tokens[TOKEN_INDEX].value);
     while (tokens[TOKEN_INDEX].type == TOKEN_MULTIPLY) {
         ParserNode* new_node = malloc(sizeof(ParserNode));
         new_node -> type = PARSER_TERM;
@@ -59,7 +59,7 @@ ParserNode* parser_factor(Token* tokens) {
     if (tokens[TOKEN_INDEX].type == TOKEN_EOL) {
         return NULL;
     }
-//    printf("Factor: %s, %s\n" , token_type_names[tokens[TOKEN_INDEX].type], tokens[TOKEN_INDEX].value);
+    printf("Factor: %s, %s\n" , token_type_names[tokens[TOKEN_INDEX].type], tokens[TOKEN_INDEX].value);
     if (tokens[TOKEN_INDEX].type == TOKEN_NUMBER) {
         node = parser_number(tokens);
     } else if (tokens[TOKEN_INDEX].type == TOKEN_OPEN_PAREN) {
@@ -107,7 +107,7 @@ ParserNode* parser_factor(Token* tokens) {
 
 ParserNode* parser_number(Token* tokens) {
     ParserNode* node = malloc(sizeof(ParserNode));
-//    printf("Number: %s, %s\n" , token_type_names[tokens[TOKEN_INDEX].type], tokens[TOKEN_INDEX].value);
+    printf("Number: %s, %s\n" , token_type_names[tokens[TOKEN_INDEX].type], tokens[TOKEN_INDEX].value);
     node -> type = PARSER_NUMBER;
     node -> token = &tokens[TOKEN_INDEX];
     TOKEN_INDEX++;

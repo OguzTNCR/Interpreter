@@ -13,10 +13,15 @@ int interpret(ParserNode* node) {
         return 0;
     }
 
+
+
     int left = interpret(node -> left);
     int right = interpret(node -> right);
 
-    if (node -> token -> type == TOKEN_NUMBER) {
+    if (node -> type == PARSER_STATEMENT) {
+        return left;
+    }
+    else if (node -> token -> type == TOKEN_NUMBER) {
         return atoi(node -> token -> value);
     }
     else if (strcmp(node -> token -> value,  "+") == 0) {
@@ -28,12 +33,12 @@ int interpret(ParserNode* node) {
     else if (strcmp(node -> token -> value, "*") == 0) {
         return left * right;
     }
-    else if (strcmp(node -> token -> value, "&") == 0) {
-        return left & right;
-    }
-    else if (strcmp(node -> token -> value, "|") == 0) {
-        return left | right;
-    }
+//    else if (strcmp(node -> token -> value, "&") == 0) {
+//        return left & right;
+//    }
+//    else if (strcmp(node -> token -> value, "|") == 0) {
+//        return left | right;
+//    }
 
-
+    return 0;
 }
