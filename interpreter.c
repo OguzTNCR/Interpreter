@@ -13,8 +13,6 @@ int interpret(ParserNode* node) {
         return 0;
     }
 
-
-
     int left = interpret(node -> left);
     int right = interpret(node -> right);
 
@@ -39,6 +37,7 @@ int interpret(ParserNode* node) {
 //    else if (strcmp(node -> token -> value, "|") == 0) {
 //        return left | right;
 //    }
+
 
     return 0;
 }
