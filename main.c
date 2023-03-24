@@ -8,7 +8,7 @@
 #include "token.h"
 #include "interpreter.h"
 
-bool is_unclosed_open_paranthesis = false;
+int unclosed_open_paranthesis = 0;
 
 Token* tokenize(char* line) {
     Token* tokens = malloc(sizeof(Token));
@@ -96,16 +96,16 @@ Token* tokenize(char* line) {
             token -> value = malloc(2);
             token -> value[0] = *line;
             token -> value[1] = '\0';
-            is_unclosed_open_paranthesis = true;
+            unclosed_open_paranthesis++;
             line++;
         }
         else if (*line == ')') {
-            if (is_unclosed_open_paranthesis == false) {
+            if (unclosed_open_paranthesis == 0) {
                 printf("Error!\n");
                 exit(1);
             }
             token -> type = TOKEN_CLOSE_PAREN;
-            is_unclosed_open_paranthesis = false;
+            unclosed_open_paranthesis--;
             token -> value = malloc(2);
             token -> value[0] = *line;
             token -> value[1] = '\0';
@@ -302,8 +302,8 @@ int main() {
         }
 
         ParserNode* node = parser_statement(tokens);
-//        tree_print(node);
-        printf("%d\n", interpret(node));
+        tree_print(node);
+//        printf("%d\n", interpret(node));
         reset_token_index();
 
 //        tree_print(node);
