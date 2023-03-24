@@ -47,7 +47,10 @@ int interpret(ParserNode* node) {
         return left >> right;
     }
     else if (strcmp(node -> token -> value, "lr") == 0) {
-
+        return (left << right) | (left >> (64 - right));
+    }
+    else if (strcmp(node -> token -> value, "ls") == 0) {
+        return (left >> right) | (left << (64 - right));
     }
 
 
