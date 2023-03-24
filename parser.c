@@ -85,7 +85,7 @@ ParserNode* parser_multiply_expr(Token* tokens) {
     ParserNode* node = parser_func_expr(tokens);
     while(tokens[TOKEN_INDEX].type == TOKEN_MULTIPLY) {
         ParserNode* new_node = malloc(sizeof(ParserNode));
-        new_node -> type = PARSER_FUNC_EXPR;
+        new_node -> type = PARSER_MULTIPLY_EXPR;
         new_node -> left = node;
         new_node -> token = &tokens[TOKEN_INDEX];
         TOKEN_INDEX++;
@@ -96,9 +96,9 @@ ParserNode* parser_multiply_expr(Token* tokens) {
 }
 
 ParserNode* parser_func_expr(Token* tokens) {
-    ParserNode* node = parser_factor(tokens);
-
-    while(
+    ParserNode* node = NULL;
+    printf("TOKEN_INDEX: %d, %s\n", TOKEN_INDEX, tokens[TOKEN_INDEX].value);
+    if(
             tokens[TOKEN_INDEX].type == TOKEN_XOR ||
             tokens[TOKEN_INDEX].type == TOKEN_LS ||
             tokens[TOKEN_INDEX].type == TOKEN_RS ||
@@ -107,8 +107,8 @@ ParserNode* parser_func_expr(Token* tokens) {
             tokens[TOKEN_INDEX].type == TOKEN_NOT
             ) {
         ParserNode* new_node = malloc(sizeof(ParserNode));
-        new_node -> left = node;
         new_node -> token = &tokens[TOKEN_INDEX];
+        new_node -> type = PARSER_FUNC_EXPR;
 
 
         switch (tokens[TOKEN_INDEX].type) {
@@ -120,16 +120,16 @@ ParserNode* parser_func_expr(Token* tokens) {
                 new_node -> type = PARSER_FUNC_EXPR;
                 TOKEN_INDEX++;
                 token_checker(tokens, TOKEN_OPEN_PAREN);
-                new_node -> right = parser_expr(tokens);
+                new_node -> left = parser_expr(tokens);
                 token_checker(tokens, TOKEN_COMMA);
-                new_node -> extra = parser_expr(tokens);
+                new_node -> right = parser_expr(tokens);
                 token_checker(tokens, TOKEN_CLOSE_PAREN);
                 break;
             case TOKEN_NOT:
                 new_node -> type = PARSER_FUNC_EXPR;
                 TOKEN_INDEX++;
                 token_checker(tokens, TOKEN_OPEN_PAREN);
-                new_node -> right = parser_expr(tokens);
+                new_node -> left = parser_expr(tokens);
                 token_checker(tokens, TOKEN_CLOSE_PAREN);
                 break;
             default:
@@ -138,6 +138,8 @@ ParserNode* parser_func_expr(Token* tokens) {
         }
 
         node = new_node;
+        } else {
+            node = parser_factor(tokens);
         }
 
     return node;
