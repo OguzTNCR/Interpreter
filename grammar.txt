@@ -1,19 +1,45 @@
 program -> statement
+
 statement -> assignment | expression
+
 assignment -> variable '=' expression
-expression -> term | expression '+' term | expression '-' term
-term -> factor | term '*' factor
-factor -> constant | variable | '(' expression ')' | xor | bitwise_not | bitwise_shift | bitwise_rotate
-variable -> letter {letter | digit}
-constant -> integer
-letter -> 'a' | 'b' | ... | 'z' | 'A' | 'B' | ... | 'Z'
-integer -> digit {digit}
-digit -> '0' | '1' | ... | '9'
+
+expression -> bitwise_or_expr
+
+bitwise_or_expr -> bitwise_and_expr | bitwise_or_expr '|' bitwise_and_expr
+
+bitwise_and_expr -> add_sub_expr | bitwise_and_expr '&' add_sub_expr
+
+add_sub_expr -> mult_expr | add_sub_expr '+' mult_expr | add_sub_expr '-' mult_expr
+
+mult_expr -> function_expr | mult_expr '*' function_expr
+
+function_expr -> factor | xor | bitwise_not | bitwise_shift | bitwise_rotate
+
+factor -> constant | variable | '(' expression ')'
+
 xor -> 'xor' '(' expression ',' expression ')'
+
 bitwise_not -> 'not' '(' expression ')'
+
 bitwise_shift -> bitwise_left_shift | bitwise_right_shift
+
 bitwise_left_shift -> 'ls' '(' expression ',' integer ')'
+
 bitwise_right_shift -> 'rs' '(' expression ',' integer ')'
+
 bitwise_rotate -> bitwise_left_rotate | bitwise_right_rotate
+
 bitwise_left_rotate -> 'lr' '(' expression ',' integer ')'
+
 bitwise_right_rotate -> 'rr' '(' expression ',' integer ')'
+
+variable -> letter {letter | digit}
+
+constant -> integer
+
+letter -> 'a' | 'b' | ... | 'z' | 'A' | 'B' | ... | 'Z'
+
+integer -> digit {digit}
+
+digit -> '0' | '1' | ... | '9'
