@@ -31,12 +31,30 @@ int interpret(ParserNode* node) {
     else if (strcmp(node -> token -> value, "*") == 0) {
         return left * right;
     }
-//    else if (strcmp(node -> token -> value, "&") == 0) {
-//        return left & right;
-//    }
-//    else if (strcmp(node -> token -> value, "|") == 0) {
-//        return left | right;
-//    }
+    else if (strcmp(node -> token -> value, "&") == 0) {
+        return left & right;
+    }
+    else if (strcmp(node -> token -> value, "|") == 0) {
+        return left | right;
+    }
+    else if (strcmp(node -> token -> value, "xor") == 0) {
+        return left ^ right;
+    }
+    else if (strcmp(node -> token -> value, "ls") == 0) {
+        return left << right;
+    }
+    else if (strcmp(node -> token -> value, "rs") == 0) {
+        return left >> right;
+    }
+    else if (strcmp(node -> token -> value, "lr") == 0) {
+        return (left << right) | (left >> (64 - right));
+    }
+    else if (strcmp(node -> token -> value, "ls") == 0) {
+        return (left >> right) | (left << (64 - right));
+    }
+    else if (strcmp(node -> token -> value, "not") == 0) {
+        return ~right;
+    }
 
 
     return 0;
