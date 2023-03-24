@@ -6,6 +6,7 @@
 #define CMPE230_PARSER_H
 
 #include "token.h"
+#include "stdbool.h"
 
 // Parser types
 typedef enum {
@@ -46,21 +47,21 @@ static const char* parser_type_names[] = {
 };
 
 // Parser functions
-ParserNode* parser_statement(Token* tokens);
-ParserNode* parser_assign_expr(Token* tokens);
-ParserNode* parser_identifier(Token* tokens);
-ParserNode* parser_expr(Token* tokens);
-ParserNode* parser_bitwise_or_expr(Token* tokens);
-ParserNode* parser_bitwise_and_expr(Token* tokens);
-ParserNode* parser_add_expr(Token* tokens);
-ParserNode* parser_multiply_expr(Token* tokens);
-ParserNode* parser_func_expr(Token* tokens);
-ParserNode* parser_factor(Token* tokens);
-ParserNode* parser_number(Token* tokens);
+ParserNode* parser_statement(Token* tokens, bool* is_error);
+ParserNode* parser_assign_expr(Token* tokens, bool* is_error);
+ParserNode* parser_identifier(Token* tokens, bool* is_error);
+ParserNode* parser_expr(Token* tokens, bool* is_error);
+ParserNode* parser_bitwise_or_expr(Token* tokens, bool* is_error);
+ParserNode* parser_bitwise_and_expr(Token* tokens, bool* is_error);
+ParserNode* parser_add_expr(Token* tokens, bool* is_error);
+ParserNode* parser_multiply_expr(Token* tokens, bool* is_error);
+ParserNode* parser_func_expr(Token* tokens, bool* is_error);
+ParserNode* parser_factor(Token* tokens, bool* is_error);
+ParserNode* parser_number(Token* tokens, bool* is_error);
 
 void reset_token_index();
 void reset_is_not_function();
 void reset_is_function();
-void token_checker(Token* tokens,TokenType type);
+void token_checker(Token* tokens,TokenType type, bool* is_error);
 
 #endif //CMPE230_PARSER_H
