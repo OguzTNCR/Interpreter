@@ -206,6 +206,15 @@ void free_tokens(Token* tokens) {
     }
     free(tokens);
 }
+void free_nodes(ParserNode* node) {
+    if (node == NULL) {
+        return;
+    }
+    free_nodes(node -> left);
+    free_nodes(node -> right);
+    free(node);
+
+}
 
 int main() {
 
@@ -237,6 +246,7 @@ int main() {
                 // If it's not an assignment, print the result
                 printf("%lli\n", result);
                 free_tokens(tokens);
+                free_nodes(node);
 
             }
         }
@@ -245,6 +255,7 @@ int main() {
         reset_token_index();
         is_error = false;
         is_assignment = false;
+
         token_count = 0;
 
     }
