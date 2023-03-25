@@ -62,4 +62,6 @@ ParserNode* parser_number(Token* tokens, bool* is_error);
 void reset_token_index();
 void token_checker(Token* tokens,TokenType type, bool* is_error);
 
+int get_token_index();
+
 #endif //CMPE230_PARSER_H

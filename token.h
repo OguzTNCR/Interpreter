@@ -33,7 +33,6 @@ typedef enum {
 typedef struct Token {
     TokenType type;
     char* value;
-    struct Token* next;
 }Token;
 
 static const char* token_type_names[] = {

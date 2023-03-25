@@ -25,9 +25,9 @@ ParserNode* parser_statement(Token* tokens, bool* is_error) {
         node -> left = parser_expr(tokens, is_error);
 
         // Check if there are consecutive identifiers
-        if (tokens[TOKEN_INDEX].type == TOKEN_IDENTIFIER && tokens[TOKEN_INDEX - 1].type == TOKEN_IDENTIFIER) {
-            *is_error = true;
-        }
+//        if (tokens[TOKEN_INDEX].type == TOKEN_IDENTIFIER && tokens[TOKEN_INDEX - 1].type == TOKEN_IDENTIFIER) {
+//            *is_error = true;
+//        }
         // Check if the statement is an assignment
         if (tokens[TOKEN_INDEX].type == TOKEN_ASSIGN) {
             ParserNode* new_node = malloc(sizeof(ParserNode));
@@ -43,6 +43,8 @@ ParserNode* parser_statement(Token* tokens, bool* is_error) {
     else {
         node -> left = parser_expr(tokens, is_error);
     }
+//    printf("TokenIndex:%d\n", TOKEN_INDEX);
+
     return node;
 }
 
@@ -182,9 +184,9 @@ ParserNode* parser_factor(Token* tokens, bool* is_error) {
             node = parser_identifier(tokens, is_error);
 
             // Check if there are consecutive identifiers
-            if (tokens[TOKEN_INDEX].type == TOKEN_IDENTIFIER && tokens[TOKEN_INDEX - 1].type == TOKEN_IDENTIFIER) {
-                *is_error = true;
-            }
+//            if (tokens[TOKEN_INDEX].type == TOKEN_IDENTIFIER && tokens[TOKEN_INDEX - 1].type == TOKEN_IDENTIFIER) {
+//                *is_error = true;
+//            }
             break;
         case TOKEN_OPEN_PAREN:
             TOKEN_INDEX++;
@@ -229,6 +231,10 @@ void token_checker(Token* tokens, TokenType token_type, bool* is_error) {
 
     TOKEN_INDEX++;
     check_token = true;
+}
+
+int get_token_index() {
+    return TOKEN_INDEX;
 }
 
 

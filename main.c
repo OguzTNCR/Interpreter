@@ -13,9 +13,11 @@ int unclosed_open_paranthesis = 0;
 bool is_error = false;
 bool is_assignment = false;
 
+int token_count = 0;
+
 Token* tokenize(char* line) {
     Token* tokens = malloc(sizeof(Token));
-    int token_count = 0;
+//    int token_count = 0;
     while (*line != '\0') {
         while (*line == ' ') {
             line++;
@@ -185,8 +187,10 @@ Token* tokenize(char* line) {
                 }
                 token -> value[length] = '\0';
             }
-
-
+        }
+        else {
+            is_error = true;
+            break;
         }
         tokens = realloc(tokens, sizeof(Token) * (token_count + 1));
         tokens[token_count] = *token;
@@ -205,9 +209,15 @@ int main() {
 
         // Tokenize the input
         Token* tokens = tokenize(line);
+//        for (int i = 0; tokens[i].type != 0; i++) {
+//            printf("type: %d, value: %s\n", tokens[i].type, tokens[i].value);
+//        }
 
         // Parse the tokens
         ParserNode* node = parser_statement(tokens, &is_error);
+        if (token_count != get_token_index()) {
+            is_error = true;
+        }
 
         if (is_error) {
             // If there was an error, print it
