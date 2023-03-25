@@ -48,7 +48,7 @@ static const char* parser_type_names[] = {
 
 // Parser functions
 ParserNode* parser_statement(Token* tokens, bool* is_error);
-ParserNode* parser_assign_expr(Token* tokens, bool* is_error);
+//ParserNode* parser_assign_expr(Token* tokens, bool* is_error);
 ParserNode* parser_identifier(Token* tokens, bool* is_error);
 ParserNode* parser_expr(Token* tokens, bool* is_error);
 ParserNode* parser_bitwise_or_expr(Token* tokens, bool* is_error);
@@ -60,8 +60,6 @@ ParserNode* parser_factor(Token* tokens, bool* is_error);
 ParserNode* parser_number(Token* tokens, bool* is_error);
 
 void reset_token_index();
-void reset_is_not_function();
-void reset_is_function();
 void token_checker(Token* tokens,TokenType type, bool* is_error);
 
 #endif //CMPE230_PARSER_H

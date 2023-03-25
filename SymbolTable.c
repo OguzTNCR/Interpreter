@@ -57,4 +57,6 @@ int get(char* key) {
         }
         temp = temp -> next;
     }
+
+    return 0;
 }

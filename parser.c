@@ -17,7 +17,16 @@ ParserNode* parser_statement(Token* tokens, bool* is_error) {
     node -> type = PARSER_STATEMENT;
 
     if (tokens[TOKEN_INDEX].type == TOKEN_IDENTIFIER) {
-        node -> left = parser_assign_expr(tokens, is_error);
+        node -> left = parser_expr(tokens, is_error);
+        if (tokens[TOKEN_INDEX].type == TOKEN_ASSIGN) {
+            ParserNode* new_node = malloc(sizeof(ParserNode));
+            new_node -> type = PARSER_ASSIGN;
+            new_node -> left = node -> left;
+            new_node -> token = &tokens[TOKEN_INDEX];
+            TOKEN_INDEX++;
+            new_node -> right = parser_expr(tokens, is_error);
+            node -> left = new_node;
+        }
     }
     else {
         node -> left = parser_expr(tokens, is_error);
@@ -165,27 +174,11 @@ ParserNode* parser_factor(Token* tokens, bool* is_error) {
     return node;
 }
 
-
 ParserNode* parser_number(Token* tokens, bool* is_error) {
     ParserNode* node = malloc(sizeof(ParserNode));
     node -> type = PARSER_NUMBER;
     node -> token = &tokens[TOKEN_INDEX];
     TOKEN_INDEX++;
-    return node;
-}
-
-ParserNode* parser_assign_expr(Token* tokens, bool* is_error) {
-    printf("assign expr: %s, %s\n" , token_type_names[tokens[TOKEN_INDEX].type], tokens[TOKEN_INDEX].value);
-    ParserNode* node = parser_identifier(tokens, is_error);
-    if (tokens[TOKEN_INDEX].type == TOKEN_ASSIGN) {
-        ParserNode* new_node = malloc(sizeof(ParserNode));
-        new_node -> type = PARSER_ASSIGN;
-        new_node -> left = node;
-        new_node -> token = &tokens[TOKEN_INDEX];
-        TOKEN_INDEX++;
-        new_node -> right = parser_expr(tokens, is_error);
-        node = new_node;
-    }
     return node;
 }
 
@@ -197,17 +190,22 @@ ParserNode* parser_identifier(Token* tokens, bool* is_error) {
     return node;
 }
 
+//ParserNode* parser_assign_expr(Token* tokens, bool* is_error) {
+//    ParserNode* node = parser_identifier(tokens, is_error);
+//    if (tokens[TOKEN_INDEX].type == TOKEN_ASSIGN) {
+//        ParserNode* new_node = malloc(sizeof(ParserNode));
+//        new_node -> type = PARSER_ASSIGN;
+//        new_node -> left = node;
+//        new_node -> token = &tokens[TOKEN_INDEX];
+//        TOKEN_INDEX++;
+//        new_node -> right = parser_expr(tokens, is_error);
+//        node = new_node;
+//    }
+//    return node;
+//}
 
 void reset_token_index() {
     TOKEN_INDEX = 0;
-}
-
-void reset_is_not_function() {
-    is_not_function = false;
-}
-
-void reset_is_function() {
-    is_function = false;
 }
 
 void token_checker(Token* tokens, TokenType token_type, bool* is_error) {
