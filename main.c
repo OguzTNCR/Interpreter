@@ -213,10 +213,11 @@ int main() {
         printf(">");
         fgets(line, 256, stdin);
 
+
         Token* tokens = tokenize(line);
-        for (int i = 0; tokens[i].type != 0; i++) {
-            printf("type: %d, value: %s\n", tokens[i].type, tokens[i].value);
-        }
+//        for (int i = 0; tokens[i].type != 0; i++) {
+//            printf("type: %d, value: %s\n", tokens[i].type, tokens[i].value);
+//        }
 
         ParserNode* node = parser_statement(tokens, &is_error);
 //        tree_print(node);
@@ -225,9 +226,9 @@ int main() {
             printf("Error!\n");
         }
         else {
-            int result = interpret(node, &is_assignment);
+            long long result = interpret(node, &is_assignment);
             if (!is_assignment) {
-                printf("%d\n", result);
+                printf("%lli\n", result);
             }
         }
 

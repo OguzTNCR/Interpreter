@@ -11,7 +11,7 @@
 
 ListNode* head = NULL;
 
-void add(char* key, int value) {
+void add(char* key, long long value) {
     if (!does_exist(key)) {
         ListNode *node = malloc(sizeof(ListNode));
         node->key = key;
@@ -48,7 +48,7 @@ bool does_exist(char* key) {
     return false;
 }
 
-int get(char* key) {
+long get(char* key) {
     ListNode* temp = head;
 
     while (temp != NULL) {
@@ -57,6 +57,5 @@ int get(char* key) {
         }
         temp = temp -> next;
     }
-
     return 0;
 }

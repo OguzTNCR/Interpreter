@@ -11,13 +11,13 @@
 #include <stdbool.h>
 
 
-int interpret(ParserNode* node, bool* is_assignment) {
+long long interpret(ParserNode* node, bool* is_assignment) {
     if (node == NULL) {
-        return 0;
+        return 0LL;
     }
 
-    int left = interpret(node -> left, is_assignment);
-    int right = interpret(node -> right, is_assignment);
+    long long left = interpret(node -> left, is_assignment);
+    long long right = interpret(node -> right, is_assignment);
 
     if (node -> type == PARSER_STATEMENT) {
         return left;
@@ -34,7 +34,7 @@ int interpret(ParserNode* node, bool* is_assignment) {
         return 0;
     }
     else if (node -> token -> type == TOKEN_NUMBER) {
-        return atoi(node -> token -> value);
+        return atoll(node -> token -> value);
     }
     else if (strcmp(node -> token -> value,  "+") == 0) {
         return left + right;
@@ -67,7 +67,7 @@ int interpret(ParserNode* node, bool* is_assignment) {
         return (left >> right) | (left << (64 - right));
     }
     else if (strcmp(node -> token -> value, "not") == 0) {
-        return ~right;
+        return ~left;
     }
     return 0;
 

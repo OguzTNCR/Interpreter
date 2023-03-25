@@ -7,12 +7,12 @@
 
 typedef struct ListNode{
     char* key;
-    int value;
+    long long value;
     struct ListNode* next;
 }ListNode;
 
-void add(char* key, int value);
-int get(char* key);
+void add(char* key, long long value);
+long get(char* key);
 bool does_exist(char* key);
 
 
