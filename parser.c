@@ -4,11 +4,15 @@
 #include "token.h"
 #include "parser.h"
 
+// Global variables
 int TOKEN_INDEX = 0;
 bool is_not_function = false;
 bool is_function = false;
 bool check_token = false;
 
+// Parser functions
+
+// Statement parser
 ParserNode* parser_statement(Token* tokens, bool* is_error) {
     if (&tokens[TOKEN_INDEX] == TOKEN_EOL) {
         return NULL;
@@ -16,8 +20,15 @@ ParserNode* parser_statement(Token* tokens, bool* is_error) {
     ParserNode* node = malloc(sizeof(ParserNode));
     node -> type = PARSER_STATEMENT;
 
+    // Check if the statement is an identifier
     if (tokens[TOKEN_INDEX].type == TOKEN_IDENTIFIER) {
         node -> left = parser_expr(tokens, is_error);
+
+        // Check if there are consecutive identifiers
+        if (tokens[TOKEN_INDEX].type == TOKEN_IDENTIFIER && tokens[TOKEN_INDEX - 1].type == TOKEN_IDENTIFIER) {
+            *is_error = true;
+        }
+        // Check if the statement is an assignment
         if (tokens[TOKEN_INDEX].type == TOKEN_ASSIGN) {
             ParserNode* new_node = malloc(sizeof(ParserNode));
             new_node -> type = PARSER_ASSIGN;
@@ -27,6 +38,7 @@ ParserNode* parser_statement(Token* tokens, bool* is_error) {
             new_node -> right = parser_expr(tokens, is_error);
             node -> left = new_node;
         }
+
     }
     else {
         node -> left = parser_expr(tokens, is_error);
@@ -34,6 +46,7 @@ ParserNode* parser_statement(Token* tokens, bool* is_error) {
     return node;
 }
 
+// Expression parser
 ParserNode* parser_expr(Token* tokens, bool* is_error) {
     ParserNode* node = parser_bitwise_or_expr(tokens, is_error);
     while(tokens[TOKEN_INDEX].type == TOKEN_BITWISE_OR) {
@@ -48,6 +61,7 @@ ParserNode* parser_expr(Token* tokens, bool* is_error) {
     return node;
 }
 
+// Bitwise or parser
 ParserNode* parser_bitwise_or_expr(Token* tokens, bool* is_error) {
     ParserNode* node = parser_bitwise_and_expr(tokens, is_error);
     while(tokens[TOKEN_INDEX].type == TOKEN_BITWISE_AND) {
@@ -62,6 +76,7 @@ ParserNode* parser_bitwise_or_expr(Token* tokens, bool* is_error) {
     return node;
 }
 
+// Bitwise and parser
 ParserNode* parser_bitwise_and_expr(Token* tokens, bool* is_error) {
     ParserNode* node = parser_add_expr(tokens, is_error);
     while(tokens[TOKEN_INDEX].type == TOKEN_PLUS || tokens[TOKEN_INDEX].type == TOKEN_MINUS) {
@@ -76,6 +91,7 @@ ParserNode* parser_bitwise_and_expr(Token* tokens, bool* is_error) {
     return node;
 }
 
+// Add parser
 ParserNode* parser_add_expr(Token* tokens, bool* is_error) {
     ParserNode* node = parser_multiply_expr(tokens, is_error);
     while(tokens[TOKEN_INDEX].type == TOKEN_MULTIPLY) {
@@ -90,6 +106,7 @@ ParserNode* parser_add_expr(Token* tokens, bool* is_error) {
     return node;
 }
 
+// Multiply parser
 ParserNode* parser_multiply_expr(Token* tokens, bool* is_error) {
     ParserNode* node = parser_func_expr(tokens, is_error);
     while(tokens[TOKEN_INDEX].type == TOKEN_MULTIPLY) {
@@ -104,6 +121,7 @@ ParserNode* parser_multiply_expr(Token* tokens, bool* is_error) {
     return node;
 }
 
+// Function parser
 ParserNode* parser_func_expr(Token* tokens, bool* is_error) {
     ParserNode* node = NULL;
     if(
@@ -153,6 +171,7 @@ ParserNode* parser_func_expr(Token* tokens, bool* is_error) {
     return node;
     }
 
+// Factor parser
 ParserNode* parser_factor(Token* tokens, bool* is_error) {
     ParserNode* node = NULL;
     switch (tokens[TOKEN_INDEX].type) {
@@ -161,6 +180,11 @@ ParserNode* parser_factor(Token* tokens, bool* is_error) {
             break;
         case TOKEN_IDENTIFIER:
             node = parser_identifier(tokens, is_error);
+
+            // Check if there are consecutive identifiers
+            if (tokens[TOKEN_INDEX].type == TOKEN_IDENTIFIER && tokens[TOKEN_INDEX - 1].type == TOKEN_IDENTIFIER) {
+                *is_error = true;
+            }
             break;
         case TOKEN_OPEN_PAREN:
             TOKEN_INDEX++;
@@ -174,6 +198,7 @@ ParserNode* parser_factor(Token* tokens, bool* is_error) {
     return node;
 }
 
+// Number parser
 ParserNode* parser_number(Token* tokens, bool* is_error) {
     ParserNode* node = malloc(sizeof(ParserNode));
     node -> type = PARSER_NUMBER;
@@ -182,6 +207,7 @@ ParserNode* parser_number(Token* tokens, bool* is_error) {
     return node;
 }
 
+// Identifier parser
 ParserNode* parser_identifier(Token* tokens, bool* is_error) {
     ParserNode* node = malloc(sizeof(ParserNode));
     node -> type = PARSER_IDENTIFIER;
@@ -190,24 +216,12 @@ ParserNode* parser_identifier(Token* tokens, bool* is_error) {
     return node;
 }
 
-//ParserNode* parser_assign_expr(Token* tokens, bool* is_error) {
-//    ParserNode* node = parser_identifier(tokens, is_error);
-//    if (tokens[TOKEN_INDEX].type == TOKEN_ASSIGN) {
-//        ParserNode* new_node = malloc(sizeof(ParserNode));
-//        new_node -> type = PARSER_ASSIGN;
-//        new_node -> left = node;
-//        new_node -> token = &tokens[TOKEN_INDEX];
-//        TOKEN_INDEX++;
-//        new_node -> right = parser_expr(tokens, is_error);
-//        node = new_node;
-//    }
-//    return node;
-//}
-
+// Reset token index
 void reset_token_index() {
     TOKEN_INDEX = 0;
 }
 
+// Token checker
 void token_checker(Token* tokens, TokenType token_type, bool* is_error) {
     if (tokens[TOKEN_INDEX].type != token_type) {
         *is_error = true;

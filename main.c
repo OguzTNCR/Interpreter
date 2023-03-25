@@ -8,6 +8,7 @@
 #include "token.h"
 #include "interpreter.h"
 
+// Global variables
 int unclosed_open_paranthesis = 0;
 bool is_error = false;
 bool is_assignment = false;
@@ -195,17 +196,6 @@ Token* tokenize(char* line) {
     return tokens;
 }
 
-void tree_print(ParserNode* node) {
-    if (node == NULL) {
-        return;
-    }
-    printf("%s\n", node -> token -> value);
-    tree_print(node -> left);
-    tree_print(node -> right);
-
-}
-
-
 int main() {
 
     while (1) {
@@ -213,31 +203,29 @@ int main() {
         printf(">");
         fgets(line, 256, stdin);
 
-
+        // Tokenize the input
         Token* tokens = tokenize(line);
-//        for (int i = 0; tokens[i].type != 0; i++) {
-//            printf("type: %d, value: %s\n", tokens[i].type, tokens[i].value);
-//        }
 
+        // Parse the tokens
         ParserNode* node = parser_statement(tokens, &is_error);
-//        tree_print(node);
 
         if (is_error) {
+            // If there was an error, print it
             printf("Error!\n");
         }
         else {
+            // Otherwise, interpret the result
             long long result = interpret(node, &is_assignment);
             if (!is_assignment) {
+                // If it's not an assignment, print the result
                 printf("%lli\n", result);
             }
         }
 
-
+        // Reset the token index and flags
         reset_token_index();
         is_error = false;
         is_assignment = false;
-
-//        tree_print(node);
 
     }
 }
