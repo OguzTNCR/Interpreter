@@ -7,7 +7,7 @@
 
 #include "parser.h"
 
-int interpret(ParserNode* node);
+int interpret(ParserNode* node, bool* is_assignment);
 
 #endif //CMPE230_INTERPRETER_H
 

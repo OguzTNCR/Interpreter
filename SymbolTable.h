@@ -13,6 +13,7 @@ typedef struct ListNode{
 
 void add(char* key, int value);
 int get(char* key);
+bool does_exist(char* key);
 
 
 #endif //CMPE230_SYMBOLTABLE_H

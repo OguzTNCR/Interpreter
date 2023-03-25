@@ -7,17 +7,31 @@
 #include "parser.h"
 #include <string.h>
 #include "interpreter.h"
+#include "SymbolTable.h"
+#include <stdbool.h>
 
-int interpret(ParserNode* node) {
+
+int interpret(ParserNode* node, bool* is_assignment) {
     if (node == NULL) {
         return 0;
     }
 
-    int left = interpret(node -> left);
-    int right = interpret(node -> right);
+    int left = interpret(node -> left, is_assignment);
+    int right = interpret(node -> right, is_assignment);
 
     if (node -> type == PARSER_STATEMENT) {
         return left;
+    }
+    else if (node -> token -> type == TOKEN_ASSIGN) {
+        add(node -> left -> token -> value, right);
+        *is_assignment = true;
+        return right;
+    }
+    else if (node -> token -> type == TOKEN_IDENTIFIER) {
+        if (does_exist(node -> token -> value)) {
+            return get(node -> token -> value);
+        }
+        return 0;
     }
     else if (node -> token -> type == TOKEN_NUMBER) {
         return atoi(node -> token -> value);
@@ -55,7 +69,6 @@ int interpret(ParserNode* node) {
     else if (strcmp(node -> token -> value, "not") == 0) {
         return ~right;
     }
-
-
     return 0;
+
 }

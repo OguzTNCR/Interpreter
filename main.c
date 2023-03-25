@@ -10,6 +10,7 @@
 
 int unclosed_open_paranthesis = 0;
 bool is_error = false;
+bool is_assignment = false;
 
 Token* tokenize(char* line) {
     Token* tokens = malloc(sizeof(Token));
@@ -213,20 +214,27 @@ int main() {
         fgets(line, 256, stdin);
 
         Token* tokens = tokenize(line);
-//        for (int i = 0; tokens[i].type != 0; i++) {
-//            printf("type: %d, value: %s\n", tokens[i].type, tokens[i].value);
-//        }
+        for (int i = 0; tokens[i].type != 0; i++) {
+            printf("type: %d, value: %s\n", tokens[i].type, tokens[i].value);
+        }
 
         ParserNode* node = parser_statement(tokens, &is_error);
 //        tree_print(node);
 
         if (is_error) {
             printf("Error!\n");
-        } else {
-            printf("%d\n", interpret(node));
+        }
+        else {
+            int result = interpret(node, &is_assignment);
+            if (!is_assignment) {
+                printf("%d\n", result);
+            }
         }
 
+
         reset_token_index();
+        is_error = false;
+        is_assignment = false;
 
 //        tree_print(node);
 

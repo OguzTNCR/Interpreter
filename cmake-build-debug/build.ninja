@@ -64,6 +64,12 @@ build CMakeFiles/cmpe230.dir/interpreter.c.o: C_COMPILER__cmpe230_Debug /Users/t
   OBJECT_DIR = CMakeFiles/cmpe230.dir
   OBJECT_FILE_DIR = CMakeFiles/cmpe230.dir
 
+build CMakeFiles/cmpe230.dir/SymbolTable.c.o: C_COMPILER__cmpe230_Debug /Users/tuncer/CLionProjects/Interpreter/SymbolTable.c || cmake_object_order_depends_target_cmpe230
+  DEP_FILE = CMakeFiles/cmpe230.dir/SymbolTable.c.o.d
+  FLAGS = -g -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk -mmacosx-version-min=13.0 -fcolor-diagnostics -std=gnu11
+  OBJECT_DIR = CMakeFiles/cmpe230.dir
+  OBJECT_FILE_DIR = CMakeFiles/cmpe230.dir
+
 
 # =============================================================================
 # Link build statements for EXECUTABLE target cmpe230
@@ -72,7 +78,7 @@ build CMakeFiles/cmpe230.dir/interpreter.c.o: C_COMPILER__cmpe230_Debug /Users/t
 #############################################
 # Link the executable cmpe230
 
-build cmpe230: C_EXECUTABLE_LINKER__cmpe230_Debug CMakeFiles/cmpe230.dir/main.c.o CMakeFiles/cmpe230.dir/parser.c.o CMakeFiles/cmpe230.dir/interpreter.c.o
+build cmpe230: C_EXECUTABLE_LINKER__cmpe230_Debug CMakeFiles/cmpe230.dir/main.c.o CMakeFiles/cmpe230.dir/parser.c.o CMakeFiles/cmpe230.dir/interpreter.c.o CMakeFiles/cmpe230.dir/SymbolTable.c.o
   FLAGS = -g -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk -mmacosx-version-min=13.0
   OBJECT_DIR = CMakeFiles/cmpe230.dir
   POST_BUILD = :
