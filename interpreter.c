@@ -70,7 +70,7 @@ long long interpret(ParserNode* node, bool* is_assignment) {
     else if (strcmp(node -> token -> value, "lr") == 0) {
         return (left << right) | (left >> (64 - right));
     }
-    else if (strcmp(node -> token -> value, "ls") == 0) {
+    else if (strcmp(node -> token -> value, "rr") == 0) {
         return (left >> right) | (left << (64 - right));
     }
     else if (strcmp(node -> token -> value, "not") == 0) {
