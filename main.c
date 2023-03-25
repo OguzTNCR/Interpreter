@@ -200,6 +200,13 @@ Token* tokenize(char* line) {
     return tokens;
 }
 
+void free_tokens(Token* tokens) {
+    for (int i = 0; tokens[i].type != 0; i++) {
+        free(tokens[i].value);
+    }
+    free(tokens);
+}
+
 int main() {
 
     while (1) {
@@ -229,6 +236,8 @@ int main() {
             if (!is_assignment) {
                 // If it's not an assignment, print the result
                 printf("%lli\n", result);
+                free_tokens(tokens);
+
             }
         }
 
@@ -236,6 +245,7 @@ int main() {
         reset_token_index();
         is_error = false;
         is_assignment = false;
+        token_count = 0;
 
     }
 }
