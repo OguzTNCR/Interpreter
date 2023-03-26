@@ -10,7 +10,9 @@ bool is_not_function = false;
 bool is_function = false;
 bool check_token = false;
 
-// Parser functions
+////////////////////////
+/// Parser functions ///
+////////////////////////
 
 // Statement parser
 ParserNode* parser_statement(Token* tokens, bool* is_error) {
@@ -24,12 +26,13 @@ ParserNode* parser_statement(Token* tokens, bool* is_error) {
     if (tokens[TOKEN_INDEX].type == TOKEN_IDENTIFIER) {
         node -> left = parser_expr(tokens, is_error);
 
-        // Check if there are consecutive identifiers
-//        if (tokens[TOKEN_INDEX].type == TOKEN_IDENTIFIER && tokens[TOKEN_INDEX - 1].type == TOKEN_IDENTIFIER) {
-//            *is_error = true;
-//        }
         // Check if the statement is an assignment
         if (tokens[TOKEN_INDEX].type == TOKEN_ASSIGN) {
+            if (node->left->type != PARSER_IDENTIFIER) {
+                *is_error = true;
+                return NULL;
+            }
+
             ParserNode* new_node = malloc(sizeof(ParserNode));
             new_node -> type = PARSER_ASSIGN;
             new_node -> left = node -> left;
@@ -217,6 +220,10 @@ ParserNode* parser_identifier(Token* tokens, bool* is_error) {
     TOKEN_INDEX++;
     return node;
 }
+
+////////////////////////
+/// Helper functions ///
+////////////////////////
 
 // Reset token index
 void reset_token_index() {

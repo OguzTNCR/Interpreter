@@ -225,9 +225,9 @@ int main() {
 
         // Tokenize the input
         Token* tokens = tokenize(line);
-        for (int i = 0; i < token_count; i++) {
-            printf("type: %d, value: %s\n", tokens[i].type, tokens[i].value);
-        }
+//        for (int i = 0; i < token_count; i++) {
+//            printf("type: %d, value: %s\n", tokens[i].type, tokens[i].value);
+//        }
 
         // Parse the tokens
         ParserNode* node = parser_statement(tokens, &is_error);
