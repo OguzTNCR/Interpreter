@@ -201,7 +201,7 @@ Token* tokenize(char* line) {
 }
 
 void free_tokens(Token* tokens) {
-    for (int i = 0; tokens[i].type != 0; i++) {
+    for (int i = 0; i < token_count; i++) {
         free(tokens[i].value);
     }
     free(tokens);
@@ -225,9 +225,9 @@ int main() {
 
         // Tokenize the input
         Token* tokens = tokenize(line);
-//        for (int i = 0; tokens[i].type != 0; i++) {
-//            printf("type: %d, value: %s\n", tokens[i].type, tokens[i].value);
-//        }
+        for (int i = 0; i < token_count; i++) {
+            printf("type: %d, value: %s\n", tokens[i].type, tokens[i].value);
+        }
 
         // Parse the tokens
         ParserNode* node = parser_statement(tokens, &is_error);
@@ -255,7 +255,6 @@ int main() {
         reset_token_index();
         is_error = false;
         is_assignment = false;
-
         token_count = 0;
 
     }
