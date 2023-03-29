@@ -221,7 +221,9 @@ int main() {
     while (1) {
         char line[256];
         printf(">");
-        fgets(line, 256, stdin);
+        if (fgets(line, 256, stdin) == NULL) {
+            break;
+        }
 
         // Tokenize the input
         Token* tokens = tokenize(line);
