@@ -196,6 +196,8 @@ ParserNode* parser_factor(Token* tokens, bool* is_error) {
             node = parser_expr(tokens, is_error);
             token_checker(tokens, TOKEN_CLOSE_PAREN, is_error);
             break;
+        case TOKEN_EOL:
+            break;
         default:
             *is_error = true;
             break;
