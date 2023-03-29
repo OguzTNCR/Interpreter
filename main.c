@@ -192,9 +192,14 @@ Token* tokenize(char* line) {
             is_error = true;
             break;
         }
-        tokens = realloc(tokens, sizeof(Token) * (token_count + 1));
-        tokens[token_count] = *token;
-        token_count++;
+        if (token -> type != TOKEN_COMMENT) {
+            tokens = realloc(tokens, sizeof(Token) * (token_count + 1));
+            tokens[token_count] = *token;
+            token_count++;
+        }
+//        tokens = realloc(tokens, sizeof(Token) * (token_count + 1));
+//        tokens[token_count] = *token;
+//        token_count++;
 
     }
     return tokens;
