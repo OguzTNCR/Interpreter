@@ -231,6 +231,11 @@ int main() {
 
         // Parse the tokens
         ParserNode* node = parser_statement(tokens, &is_error);
+
+        if (token_count == 0) {
+            continue;
+        }
+
         if (token_count != get_token_index()) {
             is_error = true;
         }
