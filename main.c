@@ -225,7 +225,7 @@ int main() {
 
     while (1) {
         char line[256];
-        printf(">");
+        printf("> ");
         if (fgets(line, 256, stdin) == NULL) {
             break;
         }
