@@ -1,3 +1,3 @@
-/Users/tuncer/CLionProjects/Interpreter/cmake-build-debug/CMakeFiles/cmpe230.dir
-/Users/tuncer/CLionProjects/Interpreter/cmake-build-debug/CMakeFiles/edit_cache.dir
-/Users/tuncer/CLionProjects/Interpreter/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/Users/sametalan/Desktop/BOUN/Fourth Term/CMPE230/Untitled/Interpreter/cmake-build-debug/CMakeFiles/cmpe230.dir
+/Users/sametalan/Desktop/BOUN/Fourth Term/CMPE230/Untitled/Interpreter/cmake-build-debug/CMakeFiles/edit_cache.dir
+/Users/sametalan/Desktop/BOUN/Fourth Term/CMPE230/Untitled/Interpreter/cmake-build-debug/CMakeFiles/rebuild_cache.dir

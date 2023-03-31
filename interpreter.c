@@ -2,7 +2,6 @@
 // Created by Oguzhan TUNCER on 23.03.2023.
 //
 
-#include <stdio.h>
 #include <stdlib.h>
 #include "parser.h"
 #include <string.h>
