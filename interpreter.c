@@ -16,7 +16,6 @@ long long interpret(ParserNode* node, bool* is_assignment) {
     if (node == NULL) {
         return 0;
     }
-    // Recursive case
     long long left = interpret(node -> left, is_assignment);
     long long right = interpret(node -> right, is_assignment);
 

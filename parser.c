@@ -19,7 +19,7 @@ ParserNode* parser_statement(Token* tokens, bool* is_error) {
     if (&tokens[TOKEN_INDEX] == TOKEN_EOL) {
         return NULL;
     }
-    ParserNode* node = malloc(sizeof(ParserNode));
+    ParserNode* node = calloc(1, sizeof(ParserNode));
     node -> type = PARSER_STATEMENT;
 
     // Check if the statement is an identifier
@@ -33,7 +33,7 @@ ParserNode* parser_statement(Token* tokens, bool* is_error) {
                 return NULL;
             }
 
-            ParserNode* new_node = malloc(sizeof(ParserNode));
+            ParserNode* new_node = calloc(1, sizeof(ParserNode));
             new_node -> type = PARSER_ASSIGN;
             new_node -> left = node -> left;
             new_node -> token = &tokens[TOKEN_INDEX];
@@ -55,7 +55,7 @@ ParserNode* parser_statement(Token* tokens, bool* is_error) {
 ParserNode* parser_expr(Token* tokens, bool* is_error) {
     ParserNode* node = parser_bitwise_or_expr(tokens, is_error);
     while(tokens[TOKEN_INDEX].type == TOKEN_BITWISE_OR) {
-        ParserNode* new_node = malloc(sizeof(ParserNode));
+        ParserNode* new_node = calloc(1, sizeof(ParserNode));
         new_node -> type = PARSER_BITWISE_OR;
         new_node -> left = node;
         new_node -> token = &tokens[TOKEN_INDEX];
@@ -70,7 +70,7 @@ ParserNode* parser_expr(Token* tokens, bool* is_error) {
 ParserNode* parser_bitwise_or_expr(Token* tokens, bool* is_error) {
     ParserNode* node = parser_bitwise_and_expr(tokens, is_error);
     while(tokens[TOKEN_INDEX].type == TOKEN_BITWISE_AND) {
-        ParserNode* new_node = malloc(sizeof(ParserNode));
+        ParserNode* new_node = calloc(1, sizeof(ParserNode));
         new_node -> type = PARSER_BITWISE_AND;
         new_node -> left = node;
         new_node -> token = &tokens[TOKEN_INDEX];
@@ -85,7 +85,7 @@ ParserNode* parser_bitwise_or_expr(Token* tokens, bool* is_error) {
 ParserNode* parser_bitwise_and_expr(Token* tokens, bool* is_error) {
     ParserNode* node = parser_add_expr(tokens, is_error);
     while(tokens[TOKEN_INDEX].type == TOKEN_PLUS || tokens[TOKEN_INDEX].type == TOKEN_MINUS) {
-        ParserNode* new_node = malloc(sizeof(ParserNode));
+        ParserNode* new_node = calloc(1, sizeof(ParserNode));
         new_node -> type = PARSER_ADD_EXPR;
         new_node -> left = node;
         new_node -> token = &tokens[TOKEN_INDEX];
@@ -100,7 +100,7 @@ ParserNode* parser_bitwise_and_expr(Token* tokens, bool* is_error) {
 ParserNode* parser_add_expr(Token* tokens, bool* is_error) {
     ParserNode* node = parser_multiply_expr(tokens, is_error);
     while(tokens[TOKEN_INDEX].type == TOKEN_MULTIPLY) {
-        ParserNode* new_node = malloc(sizeof(ParserNode));
+        ParserNode* new_node = calloc(1, sizeof(ParserNode));
         new_node -> type = PARSER_MULTIPLY_EXPR;
         new_node -> left = node;
         new_node -> token = &tokens[TOKEN_INDEX];
@@ -115,7 +115,7 @@ ParserNode* parser_add_expr(Token* tokens, bool* is_error) {
 ParserNode* parser_multiply_expr(Token* tokens, bool* is_error) {
     ParserNode* node = parser_func_expr(tokens, is_error);
     while(tokens[TOKEN_INDEX].type == TOKEN_MULTIPLY) {
-        ParserNode* new_node = malloc(sizeof(ParserNode));
+        ParserNode* new_node = calloc(1, sizeof(ParserNode));
         new_node -> type = PARSER_MULTIPLY_EXPR;
         new_node -> left = node;
         new_node -> token = &tokens[TOKEN_INDEX];
@@ -137,7 +137,7 @@ ParserNode* parser_func_expr(Token* tokens, bool* is_error) {
             tokens[TOKEN_INDEX].type == TOKEN_RR ||
             tokens[TOKEN_INDEX].type == TOKEN_NOT
             ) {
-        ParserNode* new_node = malloc(sizeof(ParserNode));
+        ParserNode* new_node = calloc(1, sizeof(ParserNode));
         new_node -> token = &tokens[TOKEN_INDEX];
         new_node -> type = PARSER_FUNC_EXPR;
 
@@ -207,7 +207,7 @@ ParserNode* parser_factor(Token* tokens, bool* is_error) {
 
 // Number parser
 ParserNode* parser_number(Token* tokens, bool* is_error) {
-    ParserNode* node = malloc(sizeof(ParserNode));
+    ParserNode* node = calloc(1, sizeof(ParserNode));
     node -> type = PARSER_NUMBER;
     node -> token = &tokens[TOKEN_INDEX];
     TOKEN_INDEX++;
@@ -216,7 +216,7 @@ ParserNode* parser_number(Token* tokens, bool* is_error) {
 
 // Identifier parser
 ParserNode* parser_identifier(Token* tokens, bool* is_error) {
-    ParserNode* node = malloc(sizeof(ParserNode));
+    ParserNode* node = calloc(1, sizeof(ParserNode));
     node -> type = PARSER_IDENTIFIER;
     node -> token = &tokens[TOKEN_INDEX];
     TOKEN_INDEX++;

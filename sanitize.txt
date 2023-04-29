@@ -1,0 +1,5 @@
+
+gcc -fsanitize=address -g -o myprogram myprogram.c
+
+
+==63578==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x0001051006e0 at pc 0x00010266643c bp 0x00016d7a2ca0 sp 0x00016d7a2c98

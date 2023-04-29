@@ -29,7 +29,7 @@ typedef struct ParserNode{
     Token* token; // token of the node
     struct ParserNode* left; // left child
     struct ParserNode* right; // right child
-    struct ParserNode* extra; // extra child
+//    struct ParserNode* extra; // extra child
 } ParserNode;
 
 static const char* parser_type_names[] = {

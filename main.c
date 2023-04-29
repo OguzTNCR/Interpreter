@@ -16,62 +16,62 @@ bool is_assignment = false;
 int token_count = 0;
 
 Token* tokenize(char* line) {
-    Token* tokens = malloc(sizeof(Token));
+    Token* tokens = NULL;
 //    int token_count = 0;
     while (*line != '\0') {
         while (*line == ' ') {
             line++;
         }
-        Token* token = malloc(sizeof(Token));
+        Token* token = calloc(1, sizeof(Token));
         if (*line == '\n') {
             token -> type = TOKEN_EOL;
             break;
         }
         if (*line == '+') {
             token -> type = TOKEN_PLUS;
-            token -> value = malloc(2);
+            token -> value = calloc(1,2);
             token -> value[0] = *line;
             token -> value[1] = '\0';
             line++;
         }
         else if (*line == '*') {
             token -> type = TOKEN_MULTIPLY;
-            token -> value = malloc(2);
+            token -> value = calloc(1, 2);
             token -> value[0] = *line;
             token -> value[1] = '\0';
             line++;
         }
         else if (*line == '-') {
             token -> type = TOKEN_MINUS;
-            token -> value = malloc(2);
+            token -> value = calloc(1, 2);
             token -> value[0] = *line;
             token -> value[1] = '\0';
             line++;
         }
         else if (*line == '|') {
             token -> type = TOKEN_BITWISE_OR;
-            token -> value = malloc(2);
+            token -> value = calloc(1, 2);
             token -> value[0] = *line;
             token -> value[1] = '\0';
             line++;
         }
         else if (*line == '&') {
             token -> type = TOKEN_BITWISE_AND;
-            token -> value = malloc(2);
+            token -> value = calloc(1, 2);
             token -> value[0] = *line;
             token -> value[1] = '\0';
             line++;
         }
         else if (*line == '=') {
             token -> type = TOKEN_ASSIGN;
-            token -> value = malloc(2);
+            token -> value = calloc(1, 2);
             token -> value[0] = *line;
             token -> value[1] = '\0';
             line++;
         }
         else if (isdigit(*line)) {
             token -> type = TOKEN_NUMBER;
-            token -> value = malloc(256);
+            token -> value = calloc(1, 256);
             int i = 0;
             while (isdigit(*line)) {
                 token -> value[i] = *line;
@@ -82,14 +82,14 @@ Token* tokenize(char* line) {
         }
         else if (*line == ',') {
             token -> type = TOKEN_COMMA;
-            token -> value = malloc(2);
+            token -> value = calloc(1, 2);
             token -> value[0] = *line;
             token -> value[1] = '\0';
             line++;
         }
         else if (*line == '%') {
             token -> type = TOKEN_COMMENT;
-            token -> value = malloc(2);
+            token -> value = calloc(1, 2);
             token -> value[0] = *line;
             token -> value[1] = '\0';
             while (*line != '\n') {
@@ -98,7 +98,7 @@ Token* tokenize(char* line) {
         }
         else if (*line == '(') {
             token -> type = TOKEN_OPEN_PAREN;
-            token -> value = malloc(2);
+            token -> value = calloc(1, 2);
             token -> value[0] = *line;
             token -> value[1] = '\0';
             unclosed_open_paranthesis++;
@@ -111,7 +111,7 @@ Token* tokenize(char* line) {
             }
             token -> type = TOKEN_CLOSE_PAREN;
             unclosed_open_paranthesis--;
-            token -> value = malloc(2);
+            token -> value = calloc(1, 2);
             token -> value[0] = *line;
             token -> value[1] = '\0';
             line++;
@@ -122,11 +122,11 @@ Token* tokenize(char* line) {
                 line++;
             }
             int length = line - start;
-            char* string = malloc(length + 1);
+            char* string = calloc(1, length + 1);
             strncpy(string, start, length);
             if (strcmp(string, "xor") == 0) {
                 token -> type = TOKEN_XOR;
-                token -> value = malloc(4);
+                token -> value = calloc(1, 4);
                 for (int i = 0; i < 3; i++) {
                     token -> value[i] = *start;
                     start++;
@@ -135,7 +135,7 @@ Token* tokenize(char* line) {
             }
             else if (strcmp(string, "not") == 0) {
                 token -> type = TOKEN_NOT;
-                token -> value = malloc(4);
+                token -> value = calloc(1, 4);
                 for (int i = 0; i < 3; i++) {
                     token -> value[i] = *start;
                     start++;
@@ -144,7 +144,7 @@ Token* tokenize(char* line) {
             }
             else if (strcmp(string, "ls") == 0) {
                 token -> type = TOKEN_LS;
-                token -> value = malloc(3);
+                token -> value = calloc(1, 3);
                 for (int i = 0; i < 2; i++) {
                     token -> value[i] = *start;
                     start++;
@@ -153,7 +153,7 @@ Token* tokenize(char* line) {
             }
             else if (strcmp(string, "rs") == 0) {
                 token -> type = TOKEN_RS;
-                token -> value = malloc(3);
+                token -> value = calloc(1, 3);
                 for (int i = 0; i < 2; i++) {
                     token -> value[i] = *start;
                     start++;
@@ -162,7 +162,7 @@ Token* tokenize(char* line) {
             }
             else if (strcmp(string, "rr") == 0) {
                 token -> type = TOKEN_RR;
-                token -> value = malloc(3);
+                token -> value = calloc(1, 3);
                 for (int i = 0; i < 2; i++) {
                     token -> value[i] = *start;
                     start++;
@@ -171,7 +171,7 @@ Token* tokenize(char* line) {
             }
             else if (strcmp(string, "lr") == 0) {
                 token -> type = TOKEN_LR;
-                token -> value = malloc(3);
+                token -> value = calloc(1, 3);
                 for (int i = 0; i < 2; i++) {
                     token -> value[i] = *start;
                     start++;
@@ -180,7 +180,7 @@ Token* tokenize(char* line) {
             }
             else {
                 token -> type = TOKEN_IDENTIFIER;
-                token -> value = malloc(length + 1);
+                token -> value = calloc(1, length + 1);
                 for (int i = 0; i < length; i++) {
                     token -> value[i] = *start;
                     start++;
@@ -193,9 +193,10 @@ Token* tokenize(char* line) {
             break;
         }
         if (token -> type != TOKEN_COMMENT) {
-            tokens = realloc(tokens, sizeof(Token) * (token_count + 1));
-            tokens[token_count] = *token;
             token_count++;
+            tokens = realloc(tokens, sizeof(Token) * (token_count + 1));
+            tokens[token_count - 1] = *token;
+//            token_count++;
         }
 //        tokens = realloc(tokens, sizeof(Token) * (token_count + 1));
 //        tokens[token_count] = *token;
