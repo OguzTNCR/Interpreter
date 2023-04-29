@@ -38,8 +38,16 @@ ParserNode* parser_statement(Token* tokens, bool* is_error) {
             new_node -> left = node -> left;
             new_node -> token = &tokens[TOKEN_INDEX];
             TOKEN_INDEX++;
+
+            // Check if there is no expression after the operator
+            if (tokens[TOKEN_INDEX].type == TOKEN_EOL) {
+                *is_error = true;
+                return NULL;
+            }
+
             new_node -> right = parser_expr(tokens, is_error);
             node -> left = new_node;
+
         }
 
     }
@@ -60,6 +68,12 @@ ParserNode* parser_expr(Token* tokens, bool* is_error) {
         new_node -> left = node;
         new_node -> token = &tokens[TOKEN_INDEX];
         TOKEN_INDEX++;
+
+        // Check if there is no expression after the operator
+        if (tokens[TOKEN_INDEX].type == TOKEN_EOL) {
+            *is_error = true;
+            return NULL;
+        }
         new_node -> right = parser_bitwise_or_expr(tokens, is_error);
         node = new_node;
     }
@@ -75,6 +89,11 @@ ParserNode* parser_bitwise_or_expr(Token* tokens, bool* is_error) {
         new_node -> left = node;
         new_node -> token = &tokens[TOKEN_INDEX];
         TOKEN_INDEX++;
+        // Check if there is no expression after the operator
+        if (tokens[TOKEN_INDEX].type == TOKEN_EOL) {
+            *is_error = true;
+            return NULL;
+        }
         new_node -> right = parser_bitwise_and_expr(tokens, is_error);
         node = new_node;
     }
@@ -90,6 +109,11 @@ ParserNode* parser_bitwise_and_expr(Token* tokens, bool* is_error) {
         new_node -> left = node;
         new_node -> token = &tokens[TOKEN_INDEX];
         TOKEN_INDEX++;
+        // Check if there is no expression after the operator
+        if (tokens[TOKEN_INDEX].type == TOKEN_EOL) {
+            *is_error = true;
+            return NULL;
+        }
         new_node -> right = parser_add_expr(tokens, is_error);
         node = new_node;
     }
@@ -105,6 +129,11 @@ ParserNode* parser_add_expr(Token* tokens, bool* is_error) {
         new_node -> left = node;
         new_node -> token = &tokens[TOKEN_INDEX];
         TOKEN_INDEX++;
+        // Check if there is no expression after the operator
+        if (tokens[TOKEN_INDEX].type == TOKEN_EOL) {
+            *is_error = true;
+            return NULL;
+        }
         new_node -> right = parser_multiply_expr(tokens, is_error);
         node = new_node;
     }
@@ -120,6 +149,11 @@ ParserNode* parser_multiply_expr(Token* tokens, bool* is_error) {
         new_node -> left = node;
         new_node -> token = &tokens[TOKEN_INDEX];
         TOKEN_INDEX++;
+        // Check if there is no expression after the operator
+        if (tokens[TOKEN_INDEX].type == TOKEN_EOL) {
+            *is_error = true;
+            return NULL;
+        }
         new_node -> right = parser_func_expr(tokens, is_error);
         node = new_node;
     }
@@ -150,6 +184,11 @@ ParserNode* parser_func_expr(Token* tokens, bool* is_error) {
             case TOKEN_RR:
                 new_node -> type = PARSER_FUNC_EXPR;
                 TOKEN_INDEX++;
+                // Check if there is no expression after the operator
+                if (tokens[TOKEN_INDEX].type == TOKEN_EOL) {
+                    *is_error = true;
+                    return NULL;
+                }
                 token_checker(tokens, TOKEN_OPEN_PAREN, is_error);
                 new_node -> left = parser_expr(tokens, is_error);
                 token_checker(tokens, TOKEN_COMMA, is_error);
@@ -159,6 +198,11 @@ ParserNode* parser_func_expr(Token* tokens, bool* is_error) {
             case TOKEN_NOT:
                 new_node -> type = PARSER_FUNC_EXPR;
                 TOKEN_INDEX++;
+                // Check if there is no expression after the operator
+                if (tokens[TOKEN_INDEX].type == TOKEN_EOL) {
+                    *is_error = true;
+                    return NULL;
+                }
                 token_checker(tokens, TOKEN_OPEN_PAREN, is_error);
                 new_node -> left = parser_expr(tokens, is_error);
                 token_checker(tokens, TOKEN_CLOSE_PAREN, is_error);
@@ -193,6 +237,11 @@ ParserNode* parser_factor(Token* tokens, bool* is_error) {
             break;
         case TOKEN_OPEN_PAREN:
             TOKEN_INDEX++;
+            // Check if there is no expression after the operator
+            if (tokens[TOKEN_INDEX].type == TOKEN_EOL) {
+                *is_error = true;
+                return NULL;
+            }
             node = parser_expr(tokens, is_error);
             token_checker(tokens, TOKEN_CLOSE_PAREN, is_error);
             break;
